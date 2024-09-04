@@ -5,7 +5,20 @@ const blogContainer = document.getElementById('blog-container');
  const searchField =document.getElementById('search-input');
 
  const searchButton =document.getElementById('search-button');
+ 
+ async function fetchNewsQuery(query){
+    try{
+        const apiUrl=`https://newsapi.org/v2/everything?q=${query}&pageSize=20&apikey=${apiKey}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return data.articles;
+    }
+        catch(error){
+        console.error("Error fetching random news",error);
+        return[];
+    }
 
+}
 
 async function fetchRandomNews(){
     try{
@@ -37,19 +50,7 @@ searchButton.addEventListener("click", async () =>{
     }
 })
 
-async function fetchNewsQuery(query){
-    try{
-        const apiUrl=`https://newsapi.org/v2/everything?q=${query}&pageSize=20&apikey=${apiKey}`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        return data.articles;
-    }
-        catch(error){
-        console.error("Error fetching random news",error);
-        return[];
-    }
 
-}
 
 
 function displayBlogs(articles){
